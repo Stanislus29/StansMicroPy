@@ -1,5 +1,5 @@
-#GUIDE FOR INSTALLING MEDIA_PIPE AND IT'S DEPENDENCIES
----
+# GUIDE FOR INSTALLING MEDIA_PIPE AND IT'S DEPENDENCIES
+
 Author: Somtochukwu Emeka-Onwuneme
 ---
 
@@ -16,7 +16,7 @@ If newer versions were installed beforehand e.g Python 3.13, and the user wishes
 
 When using mediapipe however, it is recommended that you create a virtual environment to avoid dependency issues especially in production or multiproject setups.
 
-##Installing Media Pipe
+## Installing Media Pipe
 1. **Install Python 3.12**
 
     - Go to the Python 3.12 downloads page [Python 3.12.10 download link](https://www.python.org/downloads/release/python-31210/)
@@ -48,7 +48,7 @@ Python 3.12.x
 
 3. **Create Virtual Environment**
 
-Navigate to your Project Folder, then:
+Navigate to your Project Folder, then in bash:
 
 ```bash 
 python -m venv mediapipe_env
@@ -62,7 +62,7 @@ pyvenv.cfg
 ```    
 
 4. **Activate Virtual Environment**     
-Run from the same folder where ```mediapipe_env``` is located
+Run in powershell from the same folder where ```mediapipe_env``` is located
 
 ```powershell
 .\mediapipe_env\Scripts\Activate.ps1
@@ -76,6 +76,8 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 Then run the earlier activation command again 
 
 5. **Install MediaPipe**
+
+Type in bash
 ```bash 
 pip install mediapipe
 ```
@@ -93,10 +95,12 @@ It's not an error, it’s just a notification telling you a newer version of pip
 While inside your activated venv 
 ```((mediapipe_env)``` should show in prompt):
 
+Type in bash
 ```bash 
 python -m pip install --upgrade pip
 ```
 **Then install MediaPipe**
+In bash, type:
 ```bash 
 pip install mediapipe
 ```
@@ -113,15 +117,17 @@ ERROR: Could not install packages due to an OSError: [WinError 32] The process c
 
 2. Clear pip's temporary cache 
 
+In powershell:
 ```powershell
 pip cache purge
 ```
 3. Retry Installation 
 
+In powershell:
 ```powershell
 pip install mediapipe
 ```
-4. If issue persists — specify ```--no-cache-dir```
+4. If issue persists — specify ```--no-cache-dir``` in powershell
 This forces pip not to reuse cached files:
 
 ```powershell
@@ -130,7 +136,7 @@ pip install --no-cache-dir mediapipe
 
 5. (Optional) Upgrade pip first
 
-Sometimes upgrading pip fixes file-lock issues:
+Sometimes upgrading pip fixes file-lock issues. Type in powershell:
 
 ```powershell
 python -m pip install --upgrade pip
@@ -140,34 +146,36 @@ Then retry installing MediaPipe.
 6. Run PowerShell as Administrator
 Right-click PowerShell → Run as Administrator, activate venv, and install again.
 
-##Verify Installation
+## Verify Installation
 
 1. Type in power shell inside ```mediapipe_env```
 
 ```powershell
-powershell
-
 pip list
 ```
 
 Look for something like 
 ```nginx
-mediapipe      0.10.x
+mediapipe 0.10.x
 ```
 2. Import Test in Python 
 Run Python inside the venv
 
 ```powershell 
-powershell 
-
 python
 ```
 
 Then type:
-
 ```python 
-python
-
 import mediapipe as mp
 print(mp.__version__)
 ```
+
+## Test Code
+
+You can verify that MediaPipe works using this code 
+
+[mediaPipe test code](hands_test.py)
+
+---
+© STEMAIDE 2025 - Internal Report
