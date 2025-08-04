@@ -170,3 +170,5 @@ Then type:
 import mediapipe as mp
 print(mp.__version__)
 ```
+---
+© STEMAIDE 2025 - Internal Report
