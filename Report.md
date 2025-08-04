@@ -170,5 +170,11 @@ Then type:
 import mediapipe as mp
 print(mp.__version__)
 ```
+
+## Test Code
+
+You can verify that MediaPipe works using this code 
+
+[mediaPipe test code](hands_test.py)
 ---
 © STEMAIDE 2025 - Internal Report
