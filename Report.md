@@ -176,5 +176,6 @@ print(mp.__version__)
 You can verify that MediaPipe works using this code 
 
 [mediaPipe test code](hands_test.py)
+
 ---
 © STEMAIDE 2025 - Internal Report
