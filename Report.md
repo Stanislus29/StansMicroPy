@@ -1,4 +1,4 @@
-#GUIDE FOR INSTALLING MEDIA_PIPE AND IT'S DEPENDENCIES
+# GUIDE FOR INSTALLING MEDIA_PIPE AND IT'S DEPENDENCIES
 ---
 Author: Somtochukwu Emeka-Onwuneme
 ---
@@ -16,7 +16,7 @@ If newer versions were installed beforehand e.g Python 3.13, and the user wishes
 
 When using mediapipe however, it is recommended that you create a virtual environment to avoid dependency issues especially in production or multiproject setups.
 
-##Installing Media Pipe
+## Installing Media Pipe
 1. **Install Python 3.12**
 
     - Go to the Python 3.12 downloads page [Python 3.12.10 download link](https://www.python.org/downloads/release/python-31210/)
@@ -146,7 +146,7 @@ Then retry installing MediaPipe.
 6. Run PowerShell as Administrator
 Right-click PowerShell → Run as Administrator, activate venv, and install again.
 
-##Verify Installation
+## Verify Installation
 
 1. Type in power shell inside ```mediapipe_env```
 
