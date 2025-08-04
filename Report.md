@@ -156,7 +156,7 @@ pip list
 
 Look for something like 
 ```nginx
-mediapipe      0.10.x
+mediapipe 0.10.x
 ```
 2. Import Test in Python 
 Run Python inside the venv
