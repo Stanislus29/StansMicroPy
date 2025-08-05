@@ -1,267 +1,88 @@
+# Chapter 1: LEDs
 
-
-Here’s the **updated Markdown file** with **applications for blink and PWM control (for external LEDs only)** added. I’ve also included explanations so learners and engineers can see how these methods extend the same class design.
-
----
-
-# LED Control with Raspberry Pi Pico (MicroPython)
-
-## 1. Overview
-
-**Purpose**
-Control LEDs on the Raspberry Pi Pico using MicroPython:
-
-* Turn on the on-board LED (`"LED"`).
-* Turn on an external LED on GPIO pin 21.
-* Demonstrate **blink** and **PWM brightness control** for the external LED.
-
-**Hardware Involved**
-
-* Raspberry Pi Pico board.
-* On-board LED (built-in).
-* External LED connected to GPIO 21 (with resistor).
-
-**Key Concept**
-
-* Use `Pin` and `PWM` classes from `machine` module for GPIO control.
-* Implement OOP for scalability (blink, brightness control).
+**Author: Somtochukwu Emeka-Onwuneme**
 
 ---
 
-## 2. High-Level Design (Object-Oriented Concept)
+This document presents an object-oriented approach to programming Light-Emmiting Diodes (LEDs). This object-orineted approach allows for easy scalability and ease of teaching to leaners. 
 
-**Class: `LED`**
+The examples discussed in this document are:
 
-* Represents one LED (on-board or external).
-* Handles initialization, ON/OFF, blinking, and brightness (PWM).
+1. Blinking one LED, and performing pulse width modulation on another simultaneously.
+2. Blinking the onboard LED, and an external LED simultaneously. 
+3. Blinking an external LED only.
+4. Blinking the onboard LED only. 
+5. Setting the brightness of an external LED.
 
-**Main Application**
+--- 
 
-* Creates objects for onboard and external LEDs.
-* Turns both ON, but demonstrates **blink** and **PWM** features only on external LED.
+## Entity Relationship 
 
----
+**Entity Relationship Model: ```LED Class```**
 
-## 3. Code Layers
+**Entity: LED**
 
-### Hardware Abstraction Layer (HAL)
+**Attributes (Properties / State)**
 
-* Uses `machine.Pin` and `machine.PWM` to interface with hardware.
+```pin``` → GPIO pin (string or integer)
 
-### Logic / Control Layer
+```pwm``` → PWM object (or None if not used)
 
-* Methods for ON/OFF, blink, and PWM brightness control.
+```mode``` → Current operation mode (None, 'blink', 'fade')
 
-### Application Layer
+```last_update``` → Timestamp for last state change
 
-* Instantiates LED objects and applies control logic.
+```state``` → Current digital state (0 = OFF, 1 = ON)
 
----
+```blink_delay``` → Time (ms) between blinks
 
-## 4. Flow Explanation
+```blink_times``` → Number of blinks (None = infinite)
 
-1. Create LED objects (onboard and external).
-2. Turn both ON.
-3. Blink external LED (toggle ON/OFF repeatedly).
-4. Adjust external LED brightness using PWM.
+```blink_count``` → Blinks completed
 
----
+```fade_min``` → Minimum brightness (%)
 
-## 5. Scalability & Modifications
+```fade_max```→ Maximum brightness (%)
 
-* Blink speed and PWM duty cycle can be modified easily.
-* Class can be reused for multiple external LEDs by instantiating with different pins.
-* AI algorithms can call blink or PWM methods for dynamic visual feedback.
+```fade_step``` → Increment/decrement per update
 
----
+```fade_delay``` → Time (ms) between brightness changes
 
-## 6. Educational Notes
+```brightness``` → Current brightness (%)
 
-* **Beginners**: Introduces blinking and brightness control concepts.
-* **Engineers**: Shows how OOP keeps code modular and scalable.
+```direction``` → Direction of fade (1 = increase, -1 = decrease)
 
----
+*The attributes are the lower level of abstraction and are embedded within the various method functions. By creating a single file [ledclass.py](C:\Users\DELL\Documents\blink\Libraries\ledclass.py) which contains the class LED, we provide a means to make easily understandable code which de-abstracts the lower level functions making it easier for learners*
 
-## Original Code (Functional Style)
+**Methods (Behaviors)**
 
-```python
-from machine import Pin 
+```on()``` → Turn LED fully ON (digital mode).
 
-BoardLed = Pin("LED", Pin.OUT)
-BoardLed.value(1)
+```off()``` → Turn LED fully OFF (digital mode).
 
-led = Pin(21, Pin.OUT)
-led.value(1)
-```
+```enablePwm()``` → Initialize PWM for brightness control.
 
----
+```setBrightness(percent)``` → Set brightness level (0–100%) via PWM.
 
-## Object-Oriented Rewrite (Extended with Blink and PWM)
+```blink(delay, times)``` → Start non-blocking blink animation.
 
-```python
-from machine import Pin, PWM
-import time
+```fade(minP, maxP, step, delay)``` → Start non-blocking fade animation.
 
-class LED:
-    def __init__(self, pin_id):
-        self.pin = Pin(pin_id, Pin.OUT)
-        self.pwm = None  # Initialize PWM object as None
+```update()``` → Refresh LED state (called in main loop).
 
-    # Turn LED ON
-    def turn_on(self):
-        self.pin.value(1)
-    
-    # Turn LED OFF
-    def turn_off(self):
-        self.pin.value(0)
+*This higher-level of abstraction allows for coding ease and easy scalability*
 
-    # Blink LED a given number of times
-    def blink(self, times=5, delay=0.5):
-        for _ in range(times):
-            self.turn_on()
-            time.sleep(delay)
-            self.turn_off()
-            time.sleep(delay)
+**Relationships**
 
-    # Enable PWM mode for brightness control
-    def enable_pwm(self):
-        self.pwm = PWM(self.pin)
-        self.pwm.freq(1000)  # Set PWM frequency to 1kHz
+- LED ↔ Pin
+    - 1 LED controls 1 Pin (mandatory).
 
-    # Set LED brightness (0 to 100%)
-    def set_brightness(self, percent):
-        if self.pwm is None:
-            self.enable_pwm()
-        duty = int(65535 * (percent / 100))  # Scale to 16-bit duty cycle
-        self.pwm.duty_u16(duty)
+- LED ↔ PWM
+    - 1 LED may use 1 PWM (optional, only for brightness/fade).
 
-    # Disable PWM and return to normal ON/OFF mode
-    def disable_pwm(self):
-        if self.pwm:
-            self.pwm.deinit()
-            self.pwm = None
+- LED ↔ Mode
+    - 1 LED has 1 mode at a time (blink, fade, or None).
 
-# Application Layer
-if __name__ == "__main__":
-    # Create onboard and external LEDs
-    onboard_led = LED("LED")
-    external_led = LED(21)
+## INSTALLALING  
 
-    # Turn both LEDs ON
-    onboard_led.turn_on()
-    external_led.turn_on()
-
-    # Blink external LED
-    external_led.blink(times=3, delay=0.3)
-
-    # Use PWM to fade external LED brightness
-    external_led.set_brightness(20)  # Dim to 20%
-    time.sleep(1)
-    external_led.set_brightness(80)  # Brighten to 80%
-    time.sleep(1)
-    external_led.disable_pwm()       # Back to normal mode
-```
-
----
-
-## Explanation of Object-Oriented Rewrite
-
-### Why Use OOP Here?
-
-* **Encapsulation**: Each LED’s logic (ON/OFF, blink, PWM) is kept inside one class.
-* **Scalability**: Easily add more LEDs or features without rewriting main program.
-* **Reusability**: Same class works for any GPIO pin.
-
----
-
-### Code Walkthrough
-
-#### **Class Initialization**
-
-```python
-def __init__(self, pin_id):
-    self.pin = Pin(pin_id, Pin.OUT)
-    self.pwm = None
-```
-
-* Initializes a pin for output.
-* `self.pwm` starts as `None` (only used if brightness control is needed).
-
----
-
-#### **Blink Method**
-
-```python
-def blink(self, times=5, delay=0.5):
-    for _ in range(times):
-        self.turn_on()
-        time.sleep(delay)
-        self.turn_off()
-        time.sleep(delay)
-```
-
-* Toggles the LED ON/OFF multiple times.
-* `times` → how many blinks; `delay` → speed of each blink.
-
----
-
-#### **PWM Brightness Control**
-
-```python
-def enable_pwm(self):
-    self.pwm = PWM(self.pin)
-    self.pwm.freq(1000)
-
-def set_brightness(self, percent):
-    if self.pwm is None:
-        self.enable_pwm()
-    duty = int(65535 * (percent / 100))
-    self.pwm.duty_u16(duty)
-```
-
-* Uses **Pulse Width Modulation (PWM)** for brightness.
-* `percent` converts to duty cycle (0–65535).
-* Frequency set to 1kHz for smooth dimming.
-
----
-
-#### **Disable PWM**
-
-```python
-def disable_pwm(self):
-    if self.pwm:
-        self.pwm.deinit()
-        self.pwm = None
-```
-
-* Stops PWM and returns to normal ON/OFF mode.
-
----
-
-## What is `self` and `self.pin.value`?
-
-### `self`
-
-* Refers to the **current object** created from the class.
-* Allows each LED object to have its own pin and methods.
-* Example: `external_led.turn_on()` → `self` = `external_led`.
-
-### `self.pin.value`
-
-* `self.pin` is the `Pin` object tied to that LED.
-* `.value(1)` sets pin **HIGH (ON)**, `.value(0)` sets pin **LOW (OFF)**.
-* Encapsulates hardware control inside the class.
-
----
-
-## Benefits of This Design
-
-* **Modular**: Add blink or brightness to any LED easily.
-* **Reusable**: Copy the `LED` class to other projects.
-* **Clean**: Main program only calls high-level methods (`turn_on`, `blink`, `set_brightness`).
-* **Scalable**: Add more LEDs or sensors without changing class internals.
-
----
-
-Do you want me to **add a diagram for PWM duty cycle** (showing how brightness is controlled) in this Markdown file?
-And should I **separate onboard LED logic** entirely from external LEDs (e.g., in its own class) to make it crystal clear for learners?
+1. Open the file directory in your IDE

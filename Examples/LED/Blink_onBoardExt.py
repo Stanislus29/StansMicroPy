@@ -1,4 +1,4 @@
-from ledclass import LED
+from Libraries.ledclass import LED
 import time
 
 boardLed = LED("LED")   # Onboard LED

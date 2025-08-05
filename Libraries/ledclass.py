@@ -47,7 +47,7 @@ class LED:
             self.pwm = PWM(self.pin)
             self.pwm.freq(1000)  # 1kHz frequency (smooth for LEDs)
 
-    def setBright(self, percent):
+    def setBrightness(self, percent):
         """
         Set LED brightness (0-100%).
         Enables PWM automatically if not already active.
@@ -87,7 +87,7 @@ class LED:
         self.brightness = minP
         self.direction = 1  # start increasing
         self.enablePwm()
-        self.setBright(minP)
+        self.setBrightness(minP)
 
     def update(self):
         """
@@ -127,4 +127,4 @@ class LED:
                     self.direction = 1
 
                 # Apply brightness
-                self.setBright(self.brightness)
+                self.setBrightness(self.brightness)
