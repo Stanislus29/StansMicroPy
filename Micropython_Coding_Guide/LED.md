@@ -4,21 +4,13 @@
 
 ---
 
-This document presents an object-oriented approach to programming Light-Emmiting Diodes (LEDs). This object-orineted approach allows for easy scalability and ease of teaching to leaners. 
-
-The examples discussed in this document are:
-
-1. Blinking one LED, and performing pulse width modulation on another simultaneously.
-2. Blinking the onboard LED, and an external LED simultaneously. 
-3. Blinking an external LED only.
-4. Blinking the onboard LED only. 
-5. Setting the brightness of an external LED.
+This document presents the entity-relationship model  of the library ```led.py```
 
 --- 
 
 ## Entity Relationship 
 
-**Entity Relationship Model: ```LED Class```**
+**Entity Relationship Model: ```LED```**
 
 **Entity: LED**
 
@@ -52,7 +44,7 @@ The examples discussed in this document are:
 
 ```direction``` → Direction of fade (1 = increase, -1 = decrease)
 
-*The attributes are the lower level of abstraction and are embedded within the various method functions. By creating a single file [ledclass.py](C:\Users\DELL\Documents\blink\Libraries\ledclass.py) which contains the class LED, we provide a means to make easily understandable code which de-abstracts the lower level functions making it easier for learners*
+*The attributes are the lower level of abstraction and are embedded within the various method functions. By creating a single file [led.py](C:\Users\DELL\Documents\blink\Libraries\led.py) which contains the class LED, we provide a means to make easily understandable code which de-abstracts the lower level functions making it easier for learners*
 
 **Methods (Behaviors)**
 
@@ -82,7 +74,3 @@ The examples discussed in this document are:
 
 - LED ↔ Mode
     - 1 LED has 1 mode at a time (blink, fade, or None).
-
-## INSTALLALING  
-
-1. Open the file directory in your IDE

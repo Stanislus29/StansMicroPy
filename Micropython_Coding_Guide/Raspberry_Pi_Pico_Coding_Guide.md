@@ -51,9 +51,9 @@ For example, for an LED which can exhibit the following behaviours:
 2. Blinking 
 3. PWM 
 
-We create a library called ```ledclass.py``` which can handle the lower level functions like calculating delay times, and duty cycles, and concern ourselves with only the method calls. 
+We create a library called ```led.py``` which can handle the lower level functions like calculating delay times, and duty cycles, and concern ourselves with only the method calls. 
 
-The library ```ledclass.py```, holds the following attributes of the class ```LED```:
+The library ```led.py```, holds the following attributes of the class ```LED```:
 
 ```pin``` → GPIO pin (string or integer)
 
@@ -83,7 +83,7 @@ The library ```ledclass.py```, holds the following attributes of the class ```LE
 
 ```direction``` → Direction of fade (1 = increase, -1 = decrease)
 
-*The attributes are the lower level of abstraction and are embedded within the various method functions. By creating a single file [ledclass.py](C:\Users\DELL\Documents\blink\Libraries\ledclass.py) which contains the class LED, we provide a means to make easily understandable code which de-abstracts the lower level functions making it easier for learners*
+*The attributes are the lower level of abstraction and are embedded within the various method functions. By creating a single file [led.py](C:\Users\DELL\Documents\blink\Libraries\ledclass.py) which contains the class LED, we provide a means to make easily understandable code which de-abstracts the lower level functions making it easier for learners*
 
 and offers the following methods:
 
@@ -120,7 +120,7 @@ For example: Code to turn on an external LED
 
 ```python
 from machine import Pin 
-from Libraries.ledclass import LED
+from Libraries.led import LED
 
 ExtLed = LED(21)
 ExtLed.on()
@@ -135,10 +135,11 @@ ExtLed = Pin (21, Pin.OUT)
 ExtLed.value(1)
 ```
 
-The code to turn on an LED perhaps isn't an ideal example. Let's look at applying Pulse Width Modulation to fade an LED
+The code to turn on an LED perhaps isn't an ideal example. Let's look at applying Pulse Width Modulation to fade an LED.
 
+Using our Object-Oriented Approach
 ```python 
-from Libraries.ledclass import LED
+from Libraries.led import LED
 import time
 
 pwmLed = LED(22)
@@ -149,7 +150,7 @@ while True:
     pwmLed.update()
 ```
 
-Comparing to the functional code:
+Comparing to the functional code (non-OOL):
 
 ```python 
 from machine import Pin, PWM
@@ -219,9 +220,23 @@ You should see
 ```bash 
 ls :/Examples
          244 OnBoardLedBlink.py
-```         
+```        
+
+## Deleting Files from the Pico
+
+A generic file on the Pico board ```e.g ledclass.py``` can be deleted via the following command in the bash. Assuming the directotry is ```lib/Libraries/ledclass.py
+
+```bash 
+mpremote connect auto rm :/lib/Libraries/ledclass.py
+```
+
+If you want to delete an entire directory, you must first delete all the files within it, and then use this command: 
+
+```bash 
+mpremote connect auto rmdir :/lib/Libraries
+```
 
 
 ---
 
-© STEMAIDE 2025
+© STEMAIDE Africa 2025 - Internal Technical Report
