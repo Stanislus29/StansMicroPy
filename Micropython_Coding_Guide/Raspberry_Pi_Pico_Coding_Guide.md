@@ -83,7 +83,7 @@ The library ```led.py```, holds the following attributes of the class ```LED```:
 
 ```direction``` → Direction of fade (1 = increase, -1 = decrease)
 
-*The attributes are the lower level of abstraction and are embedded within the various method functions. By creating a single file [led.py](C:\Users\DELL\Documents\blink\Libraries\led.py) which contains the class LED, we provide a means to make easily understandable code which de-abstracts the lower level functions making it easier for learners*
+*The attributes are the lower level of abstraction and are embedded within the various method functions. By creating a single file [led.py](Libraries/led.py) which contains the class LED, we provide a means to make easily understandable code which de-abstracts the lower level functions making it easier for learners*
 
 and offers the following methods:
 
