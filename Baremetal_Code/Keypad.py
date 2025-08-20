@@ -17,16 +17,6 @@ def scan_keypad():
         row_pin.high()
         for col_num, col_pin in enumerate(cols):
             if col_pin.value():
-                row_pin.low()
-                return keys[row_num][col_num]
-        row_pin.low()
-    return None
-
-def scan_keypad():
-    for row_num, row_pin in enumerate(rows):
-        row_pin.high()
-        for col_num, col_pin in enumerate(cols):
-            if col_pin.value():
                 utime.sleep_ms(20)  # debounce delay
                 if col_pin.value():  # confirm still pressed
                     row_pin.low()

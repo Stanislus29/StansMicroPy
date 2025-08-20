@@ -2,8 +2,8 @@ import network
 import socket
 
 # --- Wi-Fi credentials ---
-SSID = "TS9T Stan"
-PASSWORD = "stan29ccco"
+SSID = "Your WIFI name"
+PASSWORD = "Your WIFI password"
 
 # Connect to Wi-Fi
 wlan = network.WLAN(network.STA_IF)

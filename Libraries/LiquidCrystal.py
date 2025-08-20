@@ -1,7 +1,7 @@
 import utime
 import gc
 
-from lcdapi import LcdApi
+from Libraries.LCD.lcdapi import LcdApi
 from machine import I2C
 
 # PCF8574 pin definitions
@@ -12,7 +12,7 @@ MASK_E  = 0x04       # P2
 SHIFT_BACKLIGHT = 3  # P3
 SHIFT_DATA      = 4  # P4-P7
 
-class I2cLcd(LcdApi):
+class LCD(LcdApi):
     
     #Implements a HD44780 character LCD connected via PCF8574 on I2C
 
