@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stansmicropy"
+version = "0.1.0"
+authors = [
+  { name="Somtochukwu Stanislus Emeka-Onwuneme", email="somtochukwu.eo@outlook.com" },
+]
+description = "A MicroPython library for Python compatible boards."
+readme = "README.md"
+requires-python = ">=3.12"
+keywords = ["micropython", "embedded", "stansmicropy"]
+classifiers = [
+    "Programming Language :: Python :: Implementation :: MicroPython",
+    "Topic :: Software Development :: Embedded Systems",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "mpremote>=1.21.0",
+    "pyserial>=3.5",
+]
+
+[tool.setuptools]
+package-dir = {"" = "stansmicropy"}
+packages = {find = {where = ["stansmicropy"]}}
+
+[tool.ruff]
+line-length = 88
+target-version = "py312" 
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = ["E501"]

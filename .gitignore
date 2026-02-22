@@ -1,1 +1,15 @@
 mediapipe_env/
+.venv/
+
+__pycache__/
+*.pyc
+desktop.ini
+
+.vscode/
+*.egg-info/
+
+stansmicropy/__pycache__/
+stansmicropy/__init__.pyc 
+stansmicropy/hand_landmarker.task
+
+src/*.egg-info/
