@@ -1,9 +1,7 @@
 """Initialize an SSD1306 OLED display over I2C and turn on the onboard LED as a basic connection test."""
 
 from machine import Pin, I2C
-from ssd1306 import SSD1306_I2C
-import framebuf
-import time
+from stansmicropy.oled import SSD1306_I2C
 
 Boardled = Pin("LED", Pin.OUT)
 Boardled.value(1)

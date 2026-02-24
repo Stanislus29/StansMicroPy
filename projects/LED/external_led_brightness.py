@@ -4,7 +4,7 @@ from stansmicropy.led import LED
 import time
 
 # External LED on GPIO 21
-extLed = LED(21)
+extLed = LED(22)
 
 # Set fixed brightness (e.g., 50%)
 extLed.setBrightness(50)

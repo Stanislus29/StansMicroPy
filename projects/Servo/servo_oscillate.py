@@ -1,7 +1,6 @@
 """Oscillate a servo continuously between 30° and 150° using the Servo library."""
 
 from stansmicropy.servo import Servo
-import time
 
 servo = Servo(pin=15)  # Connect servo signal wire to GPIO 15
 

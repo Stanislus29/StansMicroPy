@@ -1,7 +1,6 @@
 """Cycle an RGB LED through red, green, and blue using non-blocking fades."""
 
-from stansmicropy.RGBLED import RGBLED
-import time
+from stansmicropy.rgbLed import RGBLED
 
 # RGB LED on pins 16, 17, 18 (common cathode, PWM)
 led = RGBLED(16, 17, 18, commonAnode=False, pwm=True)

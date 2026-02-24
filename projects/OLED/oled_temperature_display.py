@@ -2,7 +2,6 @@
 
 from machine import Pin, I2C
 from stansmicropy.oled import SSD1306_I2C
-import framebuf
 import time
 
 WIDTH = 128

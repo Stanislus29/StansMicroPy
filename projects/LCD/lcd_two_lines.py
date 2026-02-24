@@ -1,7 +1,7 @@
 """Display text on both lines of a 16x2 I2C LCD."""
 
 from machine import I2C, Pin
-from stansmicropy.LiquidCrystal import LCD  # Assuming your class is saved here
+from stansmicropy.liquidCrystal import LCD  # Assuming your class is saved here
 
 # Setup I2C (update pins and I2C ID if needed)
 i2c = I2C(0, scl=Pin(17), sda=Pin(16))  # Use correct GPIOs for your board

@@ -2,7 +2,7 @@
 
 from stansmicropy.led import LED
 import time
-boardLed = LED("LED")
+boardLed = LED(2)
 
 # Start blinking endlessly
 boardLed.blink(delay=0.5)  # Blink every 0.5s
