@@ -14,7 +14,7 @@ while True:
     print("Distance:", ultsSensor.distCm(), "cm")
     time.sleep(0.05)                 # Main loop delay
 
-    if ultsSensor.distCm() > 50:
+    if ultsSensor.distCm() > 20:
         led.on()
         servo.setAngle(90)  # Move to 90°
     else:

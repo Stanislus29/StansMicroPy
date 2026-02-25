@@ -33,11 +33,11 @@ class Ultrasonic:
         """
         Send a 10µs trigger pulse.
         """
-        self.trig.low()
+        self.trig.value(0)
         time.sleep_us(2)
-        self.trig.high()
+        self.trig.value(1)
         time.sleep_us(10)
-        self.trig.low()
+        self.trig.value(0)
 
     def _readDistance(self):
         """

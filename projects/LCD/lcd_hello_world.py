@@ -14,6 +14,8 @@ i2c = I2C(0, scl=Pin(17), sda=Pin(16), freq=400000)
 # Initialize LCD
 lcd = LCD(i2c, I2C_ADDR, I2C_NUM_ROWS, I2C_NUM_COLS)
 
+lcd.hal_backlight_on()  # Turn on backlight
+
 # Clear and display text
 lcd.clear()
 lcd.putstr("Hello World")

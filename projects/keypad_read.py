@@ -5,8 +5,8 @@ from machine import Pin
 import utime
 
 # Keypad setup
-rows = [Pin(i, Pin.OUT) for i in (6, 7, 8, 9)]   # GP2 to GP5
-cols = [Pin(i, Pin.IN, Pin.PULL_DOWN) for i in (5, 4, 3, 2)]  # GP6 to GP9
+rows = [Pin(i, Pin.OUT) for i in (19, 18, 17, 16)]   # GP2 to GP5
+cols = [Pin(i, Pin.IN, Pin.PULL_DOWN) for i in (26, 27, 14, 12)]  # GP6 to GP9
 
 keys = [
     ['1', '2', '3', 'A'],
@@ -17,14 +17,14 @@ keys = [
 
 def scan_keypad():
     for row_num, row_pin in enumerate(rows):
-        row_pin.high()
+        row_pin.value(1)  # Set current row high
         for col_num, col_pin in enumerate(cols):
             if col_pin.value():
                 utime.sleep_ms(20)  # debounce delay
                 if col_pin.value():  # confirm still pressed
-                    row_pin.low()
+                    row_pin.value(0)  # Reset row before returning
                     return keys[row_num][col_num]
-        row_pin.low()
+        row_pin.value(0)
     return None
 
 # Main loop
