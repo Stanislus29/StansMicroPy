@@ -1,5 +1,5 @@
 from machine import Pin, I2C
-from stansmicropy.oled import SSD1306_I2C, SH1106_I2C
+from stansmicropy.oled import SH1106_I2C
 import time 
 
 WIDTH = 128

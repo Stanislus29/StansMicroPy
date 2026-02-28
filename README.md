@@ -1,8 +1,50 @@
-# Stansberry - Repository with Raspberry Pi Pico Libraries 
+# StansMicroPy
 
-**Author:** Somtochukwu Stanislus Emeka-Onwuneme
+**Multitasking Libraries for MicroPython compatible boards**
+
+[![License](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
+[![Status](https://img.shields.io/badge/Status-Production-green.svg)]()
 
 ---
+
+# Overview
+
+The purpose of this project was to develop a set of libraries to allow easy programming and prototyping of essential sensor and robotics functions similar to the form of the Arduino IDE. The implementations here are independent of any IDE or existing framework. The libraries can be considered written in 'baremetal' form using only the `machine` modules provided by micropython. 
+
+Primary Purpose: Achieving Multitasking without an RTOS**
+
+In building this library, I had to tackle multitasking in a way that didn't require me to build a full RTOS. If this project has any use or advantage over similar libraries then it's that. 
+
+The libraries for programming leds, servos, and the ultrasonic sensor are embedded with an `update()` function which performs scheduling while hiding the complexity. 
+
+This 'innovation' allows a programmer to multitask multiple processes on a single core, e.g
+
+```python
+"""Simultaneously blink LEDs and oscillate a servo motor in a multi-actuator demo."""
+
+from stansmicropy.led import LED
+from stansmicropy.servo import Servo
+
+blinkLed = LED(16)
+pwmLed = LED(17)
+servo = Servo(15)
+
+servo.oscillate(min_angle=30, max_angle=150, step=3, delay=0.03)
+
+# Blink LED on pin 16
+blinkLed.blink(delay=0.3)
+
+# PWM LED on pin 17 with fade effect
+pwmLed.fade(minP=5, maxP=80, step=5, delay=0.05)
+
+while True:
+    servo.update()
+    blinkLed.update()
+    pwmLed.update()
+```
+
+The limits of how many programs can be 
 
 ## Folder Structure
 
