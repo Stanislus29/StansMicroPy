@@ -1,24 +1,22 @@
 <div align="center">
-<br/>
 
 <img src="https://img.shields.io/badge/StansMicroPy-Multitasking%20MicroPython%20Libraries-0B3D91?style=for-the-badge&logo=micropython&logoColor=white" alt="StansMicroPy Banner"/>
 
-<br/><br/>
+<br><br/>
 
 <img src="https://img.shields.io/badge/Raspberry%20Pi-Pico%20Series-0B3D91?style=flat-square&logo=raspberrypi&logoColor=white"/>
 <img src="https://img.shields.io/badge/Espressif-ESP32%20Series-0B3D91?style=flat-square&logo=espressif&logoColor=white"/>
 
-<br/><br/>
+<br/>
 
 [![License](https://img.shields.io/badge/License-MIT-0B3D91?style=flat-square&logoColor=white)](LICENSE)
 [![MicroPython](https://img.shields.io/badge/MicroPython-v1.25-0B3D91?style=flat-square&logo=micropython&logoColor=white)](https://micropython.org/)
 [![Python](https://img.shields.io/badge/Python-3.12%2B-1a73e8?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 
-<br/><br/>
+<br/>
 
 *Baremetal MicroPython libraries with built-in cooperative multitasking for the Raspberry Pi Pico.*
 
-<br/>
 </div>
 
 ---
