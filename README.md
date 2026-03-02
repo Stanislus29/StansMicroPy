@@ -25,7 +25,7 @@
 
 The purpose of this project is to develop a set of libraries that allow easy programming and prototyping of essential sensor and robotics functions, similar to the form of the Arduino IDE. The implementations here are independent of any IDE or existing framework — written in 'baremetal' form using only the `machine` modules provided by MicroPython.
 
-*N.B: Initial development was for Raspberry Pi Pico boards, but the firmware in this repository works seamlessly with ESP32 boards. In projects or documentation where references are made to Pico boards rather than `MCU`, treat this as an oversight. The libraries work equivalently for both boards. If you may wish for such documentation issues to be addressed, kindly open a pull request*
+*N.B: Initial development was for Raspberry Pi Pico boards, but the libraries in this repository work seamlessly with ESP32 boards. In projects or documentation where references are made to Pico boards rather than `MCU`, treat this as a legacy reference — the libraries work equivalently for both boards. If you wish to see such documentation updated, kindly open a pull request.*
 
 <details>
 <summary><b>🔧 Supported Components</b></summary>
