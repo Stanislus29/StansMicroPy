@@ -2,7 +2,7 @@
 
 <img src="https://img.shields.io/badge/StansMicroPy-Multitasking%20MicroPython%20Libraries-0B3D91?style=for-the-badge&logo=micropython&logoColor=white" alt="StansMicroPy Banner"/>
 
-<br><br/>
+<br/>
 
 <img src="https://img.shields.io/badge/Raspberry%20Pi-Pico%20Series-0B3D91?style=flat-square&logo=raspberrypi&logoColor=white"/>
 <img src="https://img.shields.io/badge/Espressif-ESP32%20Series-0B3D91?style=flat-square&logo=espressif&logoColor=white"/>
