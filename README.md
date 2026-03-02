@@ -1,13 +1,17 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/StansMicroPy-Multitasking%20MicroPython%20Libraries-0B3D91?style=for-the-badge&logo=raspberrypi&logoColor=white" alt="StansMicroPy Banner"/>
+<img src="https://img.shields.io/badge/StansMicroPy-Multitasking%20MicroPython%20Libraries-0B3D91?style=for-the-badge&logo=micropython&logoColor=white" alt="StansMicroPy Banner"/>
+
+<br/>
+
+<img src="https://img.shields.io/badge/Raspberry%20Pi-Pico%20Series-0B3D91?style=flat-square&logo=raspberrypi&logoColor=white"/>
+<img src="https://img.shields.io/badge/Espressif-ESP32%20Series-0B3D91?style=flat-square&logo=espressif&logoColor=white"/>
 
 <br/>
 
 [![License](https://img.shields.io/badge/License-MIT-0B3D91?style=flat-square&logoColor=white)](LICENSE)
 [![MicroPython](https://img.shields.io/badge/MicroPython-v1.25-0B3D91?style=flat-square&logo=micropython&logoColor=white)](https://micropython.org/)
 [![Python](https://img.shields.io/badge/Python-3.12%2B-1a73e8?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![Board](https://img.shields.io/badge/Board-Pico%20W%20%7C%20Pico%202W-1a73e8?style=flat-square&logo=raspberrypi&logoColor=white)]()
 
 <br/>
 
@@ -165,10 +169,6 @@ blink/
 │   ├── LED.md, Servo.md, Button.md, Ultrasonic.md
 │   ├── LCD.md, RGB.md
 │   └── AI_Kit_recommendations.md
-│
-├── Firmware/                     # ← MicroPython .uf2 firmware files
-│   ├── RPI_PICO_W-20250415-v1.25.0.uf2
-│   └── RPI_PICO2_W-20250415-v1.25.0.uf2
 │
 ├── pyproject.toml
 ├── requirements.txt

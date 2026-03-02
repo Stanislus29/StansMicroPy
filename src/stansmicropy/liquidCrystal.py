@@ -1,3 +1,11 @@
+"""
+LCD driver based on lcd_api.py and i2c_lcd.py from
+https://github.com/dhylands/python_lcd
+
+Original authors:
+- Damien Hyländs (@dhylands)
+"""
+
 """I2C driver for HD44780 character LCDs via PCF8574 expander."""
 
 import utime

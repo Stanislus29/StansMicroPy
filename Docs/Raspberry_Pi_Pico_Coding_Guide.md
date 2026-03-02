@@ -1,242 +1,451 @@
-# RASPBERRY PI PICO CODING GUIDE 
+# Coding Guide
 
 **Author: Somtochukwu Stanislus Emeka-Onwuneme**
 
 ---
 
-This guide provides an approach for engineers to install the relevant firmware on the Pico board, as well as an explanation into the object-oriented methodologies which we will be using to make learning easier for our leaners. 
+This guide is a thorough walkthrough for getting set up with the StansMicroPy library. It covers installing firmware, setting up your development environment, understanding how the libraries are structured and named, and using `mpremote` to manage files and programs on your board.
 
-It covers the following: 
-1. How to install Micropython and flash the firmware onto the board 
-2. Programming approach, creating libraries 
-3. Uploading libraries using mpremote
+**This guide covers:**
+
+1. [Installing MicroPython firmware](#1-installing-micropython-firmware)
+2. [Setting up your development environment](#2-setting-up-your-development-environment)
+3. [Understanding `mpremote`](#3-understanding-mpremote)
+4. [The library architecture](#4-the-library-architecture)
+5. [Naming conventions](#5-naming-conventions)
+6. [Learning path — from docs to projects](#6-learning-path)
 
 ---
 
-## How To Install MicroPython 
+## 1. Installing MicroPython Firmware
 
-1. Install the .uf2 firmware files. The files for the MicroPython firmware for the **Pico W** and the **Pico 2W** can be found here: [PicoFirmware](C:\Users\DELL\Documents\blink\Pico_MicroPython_Firmware). Install the required firmware for your board.
+MicroPython regularly updates their firmware, so rather than bundling it in this repo, download the latest version directly from the official source.
 
-2. Plug in the device holding the ```BOOTSEL``` button, it should appear like a drive. Drag and drop the .uf2 file into the drive, wait a while for the firmware to install, the drive should disappear from your screen. This confirms that the firmware has been flashed. 
+### Raspberry Pi Pico / Pico W / Pico 2W
 
-## Using VsCode 
+**Download:** 
 
-Whilst Thonny IDE is the mainstream choice for programming the Pico and is suitable for learners, I believe VsCode offers a lot more particularly in it's ability to easily connect with your github repo. It should be the preferred choice for engineers. To use the Pico on VsCode, install the folllowing dependencies:
+1. [Raspberry Pi Pico W](https://micropython.org/download/RPI_PICO_W/)
+2. [Raspberry Pi Pico 2W](https://micropython.org/download/RPI_PICO2_W/)
 
-1. Install Python. At the time this doc was written, my version of choice is Python 3.13.5. Install from here: [Python3.13.5_download](https://www.python.org/downloads/release/python-3135/). 
+Select the correct board variant (Pico W, Pico 2W, etc.) and download the latest `.uf2` file.
 
-N.B: Ensure that during installation you click **'Add Python to Path'**
+**Flashing the firmware:**
 
-2. Install the MicroPico extension 
+1. Unplug the Pico from your computer
+2. Hold the **BOOTSEL** button and plug the USB cable back in
+3. The Pico will appear as a removable drive (like a USB stick)
+4. Drag and drop the `.uf2` file into the drive
+5. The drive will disappear — this confirms the firmware has been flashed
 
-3. Install mpremote (REPL and file management)
+That's it. The Pico is now running MicroPython.
+
+### Espressif Boards (ESP32, ESP32-S3, etc.)
+
+**Download:** [micropython.org/download — Espressif](https://micropython.org/download/ESP32_GENERIC/)
+
+The flashing process for Espressif boards is different from the Pico. Espressif boards use a serial flash tool rather than drag-and-drop. MicroPython provides detailed installation instructions on the download page for each board, including the `esptool.py` commands required. Follow those board-specific instructions carefully.
+
+In general, the process looks like:
+
+```bash
+pip install esptool
+
+# Erase existing firmware
+esptool.py --port COM3 erase_flash
+
+# Flash the new firmware (.bin file)
+esptool.py --port COM3 --baud 460800 write_flash -z 0x1000 <firmware_file>.bin
+```
+
+> **Note:** The flash address (`0x0` vs `0x1000`) and baud rate vary by board. Always check the specific instructions on MicroPython's download page for your board. FOr certain boards eliminate `--baud 460800` and write at regular speed. 
+
+---
+
+## 2. Setting Up Your Development Environment
+
+Whilst Thonny IDE is the mainstream choice for programming MicroPython boards and is suitable for learners, I believe VSCode offers a lot more — particularly in its ability to connect with your GitHub repo and manage more complex project structures. It should be the preferred choice for engineers.
+
+### Prerequisites
+
+1. **Python 3.12+** — Install from [python.org](https://www.python.org/downloads/). Ensure you check **"Add Python to PATH"** during installation.
+
+2. **mpremote** — The primary tool for managing your board:
+   ```bash
+   pip install mpremote
+   ```
+
+3. **MicroPico extension** — Install from the VSCode extensions marketplace. This gives you a REPL, syntax highlighting, and resolves Pylance warnings for MicroPython-only modules like `machine` that don't exist on desktop Python.
+
+   > **Important:** Disable MicroPico's auto-connect feature. The serial port can only be accessed by **one** of `mpremote` or MicroPico at a time. If both try to connect, you'll get port conflicts.
+   >
+   > ```
+   > Settings > MicroPico > Auto Connect → OFF
+   > ```
+
+4. **For Computer Vision projects only:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Verifying Your Setup
+
+With the firmware installed and dependencies in place, restart VSCode and plug in your board. Since we use mpremote as opposed to MicroPico REPL, run:
+
+```bash
+mpremote connect auto
+```
+
+This should activte the MicroPython REPL. Press `Ctrl + ]` to exit. 
+
+
+#### Errors 
+
+1. In case where you get an error like:
 
 ```bash 
-pip install mpremote
+unable to access MicroPico REPL
 ```
 
-With the firmware and other dependencies installed, restart VsCode, and plug in your board. Press ```Ctrl + Shift + P```, and type ```MicroPico: Connect```, this should automatically connect the Pico to VsCode if other dependencies are installed correctly. 
+Just unplug your board and ply back in and run the connect command. That should rectify the issue. 
 
-## Object-Oriented Approach 
+2. You could also get a situation where an error like this appears 
+```bash
+unable to connect to port
+```
+Kindly confirm that your board is connected to a working port and that MicroPico REPL does not run auto-connect. 
 
-The Object-Oriented approach is chosen as it allows for easy scalability, and ease of teaching to learners. The approach involves the creation of libraries which handle the lower-level abstraction work, while the programmer operates at a higher level of abstraction, calling only the methods. 
+3. If the above do not rectify this, run `Win + X > Device Manager` and find the exact port your device is connected to. Then run:
+```bash 
+mpremote connect PORT_NAME
+```
 
-For example, we create a folder called ```Libraries``` which contains the libraries to program components like LEDs, Keypads, Servo motors, Ultasonic Sensors. The creation of this folder allows us to simplify coding by installing the lower level work in these libraries, this making our code more custom, and easier to understand.
+where `PORT_NAME` is of the type COM3, COM5, COM9 etc.
 
-**N.B:** Ensure you have a folder named ```_init.py_```, this causes Python to treat Libraries as a package. Crucial when running from VsCode directly.
+---
 
-For example, for an LED which can exhibit the following behaviours:
+## 3. Understanding `mpremote`
 
-1. Turning on or off
-2. Blinking 
-3. PWM 
+`mpremote` is arguably the most important tool in this workflow. It handles file transfers, running programs, and managing the board's filesystem — all from your terminal.
 
-We create a library called ```led.py``` which can handle the lower level functions like calculating delay times, and duty cycles, and concern ourselves with only the method calls. 
+### Why `mpremote` matters
 
-The library ```led.py```, holds the following attributes of the class ```LED```:
+If you've worked with Arduino (`.ino`) boards, you're used to a workflow where you compile and flash a single program to the board. There's no filesystem — the board runs whatever was last uploaded, and that's it.
 
-```pin``` → GPIO pin (string or integer)
+With MicroPython and `mpremote`, your board has an **actual filesystem**. You can store multiple programs, libraries, config files, and data on the board simultaneously. This changes the game entirely:
 
-```pwm``` → PWM object (or None if not used)
+- You're not limited to a single `main.py`
+- You can structure your `main.py` as an operating system — using buttons, conditionals, or terminal arguments to start or kill a process
+- You can hot-swap programs at runtime without reflashing anything
 
-```mode``` → Current operation mode (None, 'blink', 'fade')
+I demonstrated this with two projects in `projects/`:
 
-```last_update``` → Timestamp for last state change
+- [schedulerDemo.py](../projects/schedulerDemo.py) — Running two task files as simultaneous processes on the MCU
+- [buttonTogglePrograms.py](../projects/buttonTogglePrograms.py) — Using a physical button to switch between active programs, killing one and starting another — with OLED menu UI and mode persistence via JSON
 
-```state``` → Current digital state (0 = OFF, 1 = ON)
+For someone seeking to replicate modern PC OS capabilities on a cheap MCU, those demonstrations serve as a solid backbone.
 
-```blink_delay``` → Time (ms) between blinks
+### File Management
 
-```blink_times``` → Number of blinks (None = infinite)
+**Copying the library package to the board:**
 
-```blink_count``` → Blinks completed
+```bash
+mpremote cp -r src/stansmicropy :
+```
 
-```fade_min``` → Minimum brightness (%)
+This copies the entire `stansmicropy` package to the root of the board's filesystem. The `:` refers to the board's root directory.
 
-```fade_max```→ Maximum brightness (%)
+> **Note for CV projects:** When transferring to the MCU, copy `stansmicropy` without the `desktop` module. The `desktop` module contains OpenCV/MediaPipe wrappers that are for PC-side operations only.
 
-```fade_step``` → Increment/decrement per update
+**Copying a single project file:**
 
-```fade_delay``` → Time (ms) between brightness changes
+```bash
+mpremote cp projects/LED/external_led_blink.py :main.py
+```
 
-```brightness``` → Current brightness (%)
+This copies the file to the board and names it `main.py`, which the board will auto-run on boot.
 
-```direction``` → Direction of fade (1 = increase, -1 = decrease)
+**Creating directories on the board:**
 
-*The attributes are the lower level of abstraction and are embedded within the various method functions. By creating a single file [led.py](Libraries/led.py) which contains the class LED, we provide a means to make easily understandable code which de-abstracts the lower level functions making it easier for learners*
+```bash
+mpremote mkdir :projects
+```
 
-and offers the following methods:
+**Copying a folder recursively:**
 
-```on()``` → Turn LED fully ON (digital mode).
+```bash
+mpremote cp -r projects/LED :LED
+```
 
-```off()``` → Turn LED fully OFF (digital mode).
+> **Note:** The `-r` flag copies the entire folder and its contents recursively.
 
-```enablePwm()``` → Initialize PWM for brightness control.
+**Listing files on the board:**
 
-```setBrightness(percent)``` → Set brightness level (0–100%) via PWM.
+```bash
+mpremote ls :
+```
 
-```blink(delay, times)``` → Start non-blocking blink animation.
+You'll see something like:
 
-```fade(minP, maxP, step, delay)``` → Start non-blocking fade animation.
+```
+ls :
+         128 stansmicropy/
+         244 main.py
+```
 
-```update()``` → Refresh LED state (called in main loop).
+### Running Programs
 
-*This higher-level of abstraction allows for coding ease and easy scalability*
+**Run a script directly without copying it to the board:**
 
-**Relationships**
+```bash
+mpremote run projects/LED/onboard_led_blink.py
+```
 
-- LED ↔ Pin
-    - 1 LED controls 1 Pin (mandatory).
+This is useful for testing — the file executes on the board from your PC without being stored on the board's filesystem.
 
-- LED ↔ PWM
-    - 1 LED may use 1 PWM (optional, only for brightness/fade).
+**Run a script already stored on the board:**
 
-- LED ↔ Mode
-    - 1 LED has 1 mode at a time (blink, fade, or None).
+```bash
+mpremote exec "import main"
+```
 
-The focus on creating a library allows us to write custom code based on the methods.
+### Deleting Files
 
-For example: Code to turn on an external LED
+**Delete a single file:**
+
+```bash
+mpremote rm :main.py
+```
+
+**Delete a directory** (must be empty first):
+
+```bash
+mpremote rm :stansmicropy/led.py
+mpremote rm :stansmicropy/servo.py
+# ... remove all files first
+mpremote rmdir :stansmicropy
+```
+
+### Quick Reference
+
+| Command | Description |
+|:---|:---|
+| `mpremote connect auto` | Open a REPL session |
+| `mpremote ls :` | List files on the board root |
+| `mpremote ls :stansmicropy/` | List files in a subdirectory |
+| `mpremote cp file.py :` | Copy a file to the board root |
+| `mpremote cp -r folder :folder` | Copy a folder recursively |
+| `mpremote cp :main.py .` | Copy a file **from** the board to your PC |
+| `mpremote run script.py` | Run a local script on the board (without saving) |
+| `mpremote rm :file.py` | Delete a file from the board |
+| `mpremote mkdir :dirname` | Create a directory on the board |
+| `mpremote rmdir :dirname` | Remove an empty directory from the board |
+| `mpremote reset` | Soft-reset the board |
+
+---
+
+## 4. The Library Architecture
+
+### Object-Oriented Approach
+
+The libraries are built using an Object-Oriented approach. This allows for easy scalability and makes teaching substantially easier. The approach involves creating library classes that handle the lower-level abstraction work, while the programmer operates at a higher level — calling only the methods.
+
+The library package `stansmicropy` lives in `src/stansmicropy/` and contains classes for every supported component. The `__init__.py` exposes them all, so you can import directly:
 
 ```python
-from machine import Pin 
-from Libraries.led import LED
-
-ExtLed = LED(21)
-ExtLed.on()
+from stansmicropy.led import LED
+from stansmicropy.servo import Servo
+from stansmicropy.ultraSonic import Ultrasonic
 ```
 
-This is easier to understand and scale than conventional codes. Conventional code for this would be: 
+**N.B:** The `__init__.py` file is what causes Python to treat `stansmicropy` as a package. Without it, imports will fail.
+
+### Why This Matters — A Concrete Example
+
+Let's say you want to fade an LED using PWM. Here's what the code looks like with the library:
 
 ```python
-from machine import Pin 
-
-ExtLed = Pin (21, Pin.OUT)
-ExtLed.value(1)
-```
-
-The code to turn on an LED perhaps isn't an ideal example. Let's look at applying Pulse Width Modulation to fade an LED.
-
-Using our Object-Oriented Approach
-```python 
-from Libraries.led import LED
-import time
+from stansmicropy.led import LED
 
 pwmLed = LED(22)
-
 pwmLed.fade(minP=20, maxP=80, step=5, delay=0.05)
 
 while True:
     pwmLed.update()
 ```
 
-Comparing to the functional code (non-OOL):
+Compare this to the raw MicroPython equivalent:
 
-```python 
+```python
 from machine import Pin, PWM
 import time
 
-# Setup PWM on pin 21
-pwm = PWM(Pin(21))
-pwm.freq(1000)  # 1kHz frequency
+pwm = PWM(Pin(22))
+pwm.freq(1000)
 
-# Helper to set brightness (0-100%)
 def set_brightness(pwm, percent):
-    duty = int((percent / 100) * 65535)  # convert to 16-bit duty
+    duty = int((percent / 100) * 65535)
     pwm.duty_u16(duty)
 
-# Helper to fade
-def fade(minP, maxP, step, delay):
-    if start < end:
-        rng = range(minP, maxP + 1, step)
-    else:
-        rng = range(minP, maxP - 1, -step)
-    for level in rng:
-        set_brightness(pwm, level)
-        time.sleep(delay)
+brightness = 20
+direction = 1
 
-# Fade loop
 while True:
-    fade(20, 80, 5, 0.05)  # fade up
-    fade(80, 20, 5, 0.05)  # fade down
+    set_brightness(pwm, brightness)
+    brightness += direction * 5
+    if brightness >= 80:
+        direction = -1
+    elif brightness <= 20:
+        direction = 1
+    time.sleep(0.05)
 ```
 
-We see that the Object-Oriented approach allows us to avoid the overhead of lower-level abstraction, and provides scalable and modular code
+The library version hides the duty cycle maths, the direction tracking, and the PWM initialisation. You describe _what_ you want (fade between 20% and 80%) and the library handles _how_.
 
-## Updating Pico's lib folder 
+More importantly, the library version is **non-blocking**. The `update()` pattern means you can run multiple components simultaneously without any one of them hogging the processor — which brings us to the core advantage of this library.
 
-Ensure mpremote was installed from earlier, then run this in bash. 
+### The `update()` Pattern
 
-```bash
-mpremote connect auto mkdir :/lib
-mpremote connect auto cp -r Libraries :/lib
+Every time-dependent library (LED, Servo, Ultrasonic, RGBLED) follows the same cooperative pattern:
+
+1. **Configure** the behaviour — `blink()`, `fade()`, `oscillate()`, `sweep()`, etc.
+2. **Call `update()`** repeatedly in your main loop
+
+```python
+from stansmicropy.led import LED
+from stansmicropy.servo import Servo
+
+led = LED(16)
+servo = Servo(15)
+
+led.blink(delay=0.3)
+servo.oscillate(min_angle=30, max_angle=150, step=3, delay=0.03)
+
+while True:
+    led.update()
+    servo.update()
 ```
 
-This adds all updates to your Libraries into the ```lib``` directory in Pico's file management system 
-
-## Uploading Examples to Pico 
-
-You can push the Examples (if required) to the Pico board 
-
-```bash
-mpremote connect auto mkdir :/Examples
-mpremote connect auto cp -r Examples :/Examples
-```
-**N.B:** ```-r``` copies the entire folder recursively 
-```mpremote connect auto mkdir :/Examples``` creates a folder named "Examples" on the Pico if it doesn't exist already
-
-Or if you want to only update or upload a single example 
-```bash
-mpremote connect auto mkdir :/Examples
-mpremote connect auto cp Examples/LED/OnBoardLedBlink.py :/Examples
-```
-
-Verify 
-```bash 
-mpremote connect auto ls :/Examples
-```
-
-You should see 
-```bash 
-ls :/Examples
-         244 OnBoardLedBlink.py
-```        
-
-## Deleting Files from the Pico
-
-A generic file on the Pico board ```e.g ledclass.py``` can be deleted via the following command in the bash. Assuming the directotry is ```lib/Libraries/ledclass.py
-
-```bash 
-mpremote connect auto rm :/lib/Libraries/ledclass.py
-```
-
-If you want to delete an entire directory, you must first delete all the files within it, and then use this command: 
-
-```bash 
-mpremote connect auto rmdir :/lib/Libraries
-```
-
+Both components run concurrently on a single core, no threads, no RTOS.
 
 ---
 
-© STEMAIDE Africa 2025 - Internal Technical Report
+## 5. Naming Conventions
+
+Consistency matters. The codebase follows these conventions:
+
+### Files
+
+| Type | Convention | Examples |
+|:---|:---|:---|
+| Library modules | **camelCase** | `led.py`, `rgbLed.py`, `ultraSonic.py`, `liquidCrystal.py`, `wifiManager.py` |
+| Project scripts | **snake_case** | `onboard_led_blink.py`, `servo_sweep.py`, `ultrasonic_measure_distance.py` |
+| Documentation | **PascalCase / descriptive** | `LED.md`, `Servo.md`, `Raspberry_Pi_Pico_Coding_Guide.md` |
+
+### Classes
+
+All classes use **PascalCase**:
+
+```python
+LED, Servo, Ultrasonic, Button, RGBLED, LCD, Scheduler, WiFiManager
+```
+
+### Methods
+
+Methods use **camelCase**:
+
+```python
+led.setBrightness(50)
+led.enablePwm()
+servo.setAngle(90)
+servo.stopOscillation()
+rgb.setColour(255, 0, 0)
+rgb.setNamedColour("cyan")
+rgb.fadeTo(0, 255, 128, speed=5)
+```
+
+### Variables
+
+Instance variables follow **camelCase**:
+
+```python
+blinkLed = LED(16)
+pwmLed = LED(17)
+extLed = LED(21)
+boardLed = LED(2)
+```
+
+### General Rule
+
+If you're writing a **library method** or **variable name**, use camelCase. If you're naming a **project file**, use snake_case. If you're naming a **class**, use PascalCase.
+
+---
+
+## 6. Learning Path
+
+### Step 1: Read the Documentation
+
+Each library module has a corresponding doc in `Docs/`. These are structured as entity-relationship models — they lay out every attribute and method the class offers, along with descriptions and relationships.
+
+| Doc | Component | What You'll Learn |
+|:---|:---|:---|
+| [LED.md](LED.md) | LEDs | `on()`, `off()`, `blink()`, `fade()`, `setBrightness()`, `update()` |
+| [Servo.md](Servo.md) | Servo Motors | `setAngle()`, `sweep()`, `oscillate()`, `calibrate()`, `release()`, `update()` |
+| [Button.md](Button.md) | Push Buttons | `buttonPressed()`, `getState()`, debounce handling |
+| [Ultrasonic.md](Ultrasonic.md) | HC-SR04 Sensor | `distCm()`, `distMm()`, `near()`, `avg()`, `update()` |
+| [LCD.md](LCD.md) | I2C LCD Display | `clear()`, `move_to()`, `putstr()`, `backlight_on()`, `custom_char()` |
+| [RGB.md](RGB.md) | RGB LEDs | `setColour()`, `setHex()`, `setNamedColour()`, `fadeTo()`, `update()` |
+
+Start by reading the LED and Servo docs — they're the most commonly used and demonstrate the `update()` pattern clearly.
+
+### Step 2: Work Through the Projects
+
+The `projects/` folder is organised by component, with progressively complex examples:
+
+**Start here — LEDs:**
+
+| Project | What It Does |
+|:---|:---|
+| [led_on.py](../projects/LED/led_on.py) | Turn on an external LED — the "Hello World" |
+| [onboard_led_blink.py](../projects/LED/onboard_led_blink.py) | Blink the Pico's onboard LED |
+| [external_led_blink.py](../projects/LED/external_led_blink.py) | Blink an external LED on a GPIO pin |
+| [external_led_brightness.py](../projects/LED/external_led_brightness.py) | PWM brightness control |
+| [two_leds_blink_and_fade.py](../projects/LED/two_leds_blink_and_fade.py) | Two LEDs running different animations simultaneously |
+
+**Then move to Servos:**
+
+| Project | What It Does |
+|:---|:---|
+| [servo_move_to_angle.py](../projects/Servo/servo_move_to_angle.py) | Move a servo to a specific angle |
+| [servo_sweep.py](../projects/Servo/servo_sweep.py) | Sweep from 0° to 180° |
+| [servo_oscillate.py](../projects/Servo/servo_oscillate.py) | Continuous back-and-forth oscillation |
+
+**Then multi-component projects:**
+
+| Project | What It Does |
+|:---|:---|
+| [leds_and_servo.py](../projects/multi_component_projects/leds_and_servo.py) | LEDs + Servo running together |
+| [sound_sensor_led.py](../projects/multi_component_projects/sound_sensor_led.py) | Sound sensor triggering an LED |
+| [sound_sensor_servo.py](../projects/multi_component_projects/sound_sensor_servo.py) | Sound sensor driving a servo |
+| [ultrasonic_led_baremetal.py](../projects/multi_component_projects/ultrasonic_led_baremetal.py) | Ultrasonic sensor controlling an LED |
+
+**Then the advanced stuff:**
+
+| Project | What It Does |
+|:---|:---|
+| [schedulerDemo.py](../projects/schedulerDemo.py) | Running multiple task modules as simultaneous processes |
+| [buttonTogglePrograms.py](../projects/buttonTogglePrograms.py) | Button-driven program switching with OLED menu, persistence, watchdog |
+| [Computer Vision projects](../projects/Computer_Vision/) | Gesture control over Wi-Fi (PC → Pico) |
+
+### Step 3: Build Your Own
+
+At this point you've seen the pattern:
+
+1. Import from `stansmicropy`
+2. Instantiate the component with its GPIO pin
+3. Call the behaviour method (`blink()`, `sweep()`, `fadeTo()`, etc.)
+4. Call `update()` in your `while True` loop
+
+The libraries handle the rest. Build something.
+
+

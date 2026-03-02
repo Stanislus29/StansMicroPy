@@ -1,80 +1,19 @@
-#
-# MicroPython SH1106 OLED driver, I2C and SPI interfaces
-#
-# The MIT License (MIT)
-#
-# Copyright (c) 2016 Radomir Dopieralski (@deshipu),
-#               2017-2021 Robert Hammelrath (@robert-hh)
-#               2021 Tim Weber (@scy)
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
-#
-# Sample code sections for ESP8266 pin assignments
-# ------------ SPI ------------------
-# Pin Map SPI
-#   - 3v - xxxxxx   - Vcc
-#   - G  - xxxxxx   - Gnd
-#   - D7 - GPIO 13  - Din / MOSI fixed
-#   - D5 - GPIO 14  - Clk / Sck fixed
-#   - D8 - GPIO 4   - CS (optional, if the only connected device)
-#   - D2 - GPIO 5   - D/C
-#   - D1 - GPIO 2   - Res
-#
-# for CS, D/C and Res other ports may be chosen.
-#
-# from machine import Pin, SPI
-# import sh1106
-
-# spi = SPI(1, baudrate=1000000)
-# display = sh1106.SH1106_SPI(128, 64, spi, Pin(5), Pin(2), Pin(4))
-# display.sleep(False)
-# display.fill(0)
-# display.text('Testing 1', 0, 0, 1)
-# display.show()
-#
-# --------------- I2C ------------------
-#
-# Pin Map I2C
-#   - 3v - xxxxxx   - Vcc
-#   - G  - xxxxxx   - Gnd
-#   - D2 - GPIO 5   - SCK / SCL
-#   - D1 - GPIO 4   - DIN / SDA
-#   - D0 - GPIO 16  - Res
-#   - G  - xxxxxx     CS
-#   - G  - xxxxxx     D/C
-#
-# Pin's for I2C can be set almost arbitrary
-#
-# from machine import Pin, I2C
-# import sh1106
-#
-# i2c = I2C(scl=Pin(5), sda=Pin(4), freq=400000)
-# display = sh1106.SH1106_I2C(128, 64, i2c, Pin(16), 0x3c)
-# display.sleep(False)
-# display.fill(0)
-# display.text('Testing 1', 0, 0, 1)
-# display.show()
+"""MicroPython SH1106 OLED driver, I2C and SPI interfaces"""
 
 from micropython import const
 import utime as time
 import framebuf
 
+# SPDX-License-Identifier: MIT
+#
+# Based on the MicroPython SH1106 driver by:
+#   Radomir Dopieralski (@deshipu)
+#   Robert Hammelrath (@robert-hh)
+#   Tim Weber (@scy)
+# link: https://github.com/robert-hh/SH1106
+#
+# Modifications for StansMicroPy by
+#   Somtochukwu Stanislus Emeka-Onwuneme (2026)
 
 # a few register definitions
 _SET_CONTRAST        = const(0x81)
@@ -345,6 +284,14 @@ SET_CHARGE_PUMP = const(0x8D)
 
 # Subclassing FrameBuffer provides support for graphics primitives
 # http://docs.micropython.org/en/latest/pyboard/library/framebuf.html
+
+# SPDX-License-Identifier: BSD
+#
+# Based on the MicroPython SSD1306 driver by Adafruit and contributors:
+#
+# Modifications for StansMicroPy by
+#   Somtochukwu Stanislus Emeka-Onwuneme (2026)
+
 class SSD1306(framebuf.FrameBuffer):
     def __init__(self, width, height, external_vcc):
         self.width = width

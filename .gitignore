@@ -13,3 +13,7 @@ stansmicropy/__init__.pyc
 stansmicropy/hand_landmarker.task
 
 src/*.egg-info/
+
+pyroject.toml
+
+Docs/AI_Kit_recommendations.md

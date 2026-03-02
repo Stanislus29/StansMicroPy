@@ -1,3 +1,11 @@
+"""
+LCD driver based on lcd_api.py and i2c_lcd.py from
+https://github.com/dhylands/python_lcd
+
+Original authors:
+- Damien Hyländs (@dhylands)
+"""
+
 """Provides an API for talking to HD44780 compatible character LCDs."""
 
 import time
