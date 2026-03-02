@@ -14,6 +14,6 @@ stansmicropy/hand_landmarker.task
 
 src/*.egg-info/
 
-pyroject.toml
+pyproject.toml
 
 Docs/AI_Kit_recommendations.md
