@@ -17,3 +17,5 @@ src/*.egg-info/
 pyproject.toml
 
 Docs/AI_Kit_recommendations.md
+
+stansmicropy_src.zip
