@@ -145,7 +145,7 @@ pip install -r requirements.txt
 ## Project Structure
 
 ```
-blink/
+StansMicroPy/
 ├── src/
 │   ├── stansmicropy/             # ← Core MicroPython libraries
 │   │   ├── led.py, servo.py, button.py, ultraSonic.py
