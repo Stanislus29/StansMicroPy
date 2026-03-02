@@ -1,4 +1,4 @@
-"""TCP server on the Pico that receives FORWARD/BACKWARD commands and adjusts a servo angle."""
+"""TCP server on the MCU that receives FORWARD/BACKWARD commands and adjusts a servo angle."""
 
 from stansmicropy.wifiManager import WiFiManager
 from stansmicropy.servo import Servo

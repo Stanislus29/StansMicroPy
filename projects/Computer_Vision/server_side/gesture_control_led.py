@@ -1,4 +1,4 @@
-"""Run OpenCV on PC to detect hand movements and send commands to Pico over Wi-Fi to control an LED."""
+"""Run OpenCV on PC to detect hand movements and send commands to MCU over Wi-Fi to control an LED."""
 
 from stansmicropy.wifiManager import WiFiManager
 from stansmicropy.led import LED
