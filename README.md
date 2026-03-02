@@ -1,13 +1,13 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/StansMicroPy-Multitasking%20MicroPython%20Libraries-0969DA?style=for-the-badge&logo=raspberrypi&logoColor=white" alt="StansMicroPy Banner"/>
+<img src="https://img.shields.io/badge/StansMicroPy-Multitasking%20MicroPython%20Libraries-0B3D91?style=for-the-badge&logo=raspberrypi&logoColor=white" alt="StansMicroPy Banner"/>
 
 <br/>
 
-[![License](https://img.shields.io/badge/License-MIT-0969DA?style=flat-square)](LICENSE)
-[![MicroPython](https://img.shields.io/badge/MicroPython-v1.25-1a73e8?style=flat-square&logo=micropython&logoColor=white)](https://micropython.org/)
-[![Python](https://img.shields.io/badge/Python-3.12%2B-3572A5?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![Board](https://img.shields.io/badge/Board-Pico%20W%20%7C%20Pico%202W-5B9BD5?style=flat-square&logo=raspberrypi&logoColor=white)]()
+[![License](https://img.shields.io/badge/License-MIT-0B3D91?style=flat-square&logoColor=white)](LICENSE)
+[![MicroPython](https://img.shields.io/badge/MicroPython-v1.25-0B3D91?style=flat-square&logo=micropython&logoColor=white)](https://micropython.org/)
+[![Python](https://img.shields.io/badge/Python-3.12%2B-1a73e8?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Board](https://img.shields.io/badge/Board-Pico%20W%20%7C%20Pico%202W-1a73e8?style=flat-square&logo=raspberrypi&logoColor=white)]()
 
 <br/>
 
@@ -191,10 +191,10 @@ blink/
 
 ### Connect with me
 
-<a href="https://twitter.com/vzy-engineer">
-  <img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" />
+<a href="https://twitter.com/vzyengineer">
+  <img src="https://img.shields.io/badge/X-000000?style=flat&logo=&logoColor=white" />
 </a><a href="https://linkedin.com/in/emekasomto3">
-  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=&logo=linkedin&logoColor=white" />
 </a>
 
 </div>
