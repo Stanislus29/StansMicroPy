@@ -185,6 +185,28 @@ blink/
 
 ---
 
+## Citations
+
+This project is indebted to the open source community, particularly the contributions of:
+
+<div align="center">
+
+![Radomir Dopieralski](https://img.shields.io/badge/Radomir%20Dopieralski-%40deshipu-0B3D91?style=for-the-badge&logo=github&logoColor=white)
+![Robert Hammelrath](https://img.shields.io/badge/Robert%20Hammelrath-%40robert--hh-0B3D91?style=for-the-badge&logo=github&logoColor=white)
+![Tim Weber](https://img.shields.io/badge/Tim%20Weber-%40scy-0B3D91?style=for-the-badge&logo=github&logoColor=white)
+![Adafruit Inc.](https://img.shields.io/badge/Adafruit%20Inc.-Open%20Source-0B3D91?style=for-the-badge&logo=adafruit&logoColor=white)
+
+whose code provided the foundations for the OLED library in this repository.
+
+and 
+
+![Damien Hyländs](https://img.shields.io/badge/Damien%20Hyl%C3%A4nds-%40dhylands-0B3D91?style=for-the-badge&logo=github&logoColor=white)
+
+whose code is the backbone of the LCD Library 
+</div>
+
+---
+
 <div align="center">
 
 **Somtochukwu Stanislus Emeka-Onwuneme** · [MIT License](LICENSE)
