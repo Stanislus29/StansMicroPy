@@ -340,7 +340,7 @@ Consistency matters. The codebase follows these conventions:
 |:---|:---|:---|
 | Library modules | **camelCase** | `led.py`, `rgbLed.py`, `ultraSonic.py`, `liquidCrystal.py`, `wifiManager.py` |
 | Project scripts | **snake_case** | `onboard_led_blink.py`, `servo_sweep.py`, `ultrasonic_measure_distance.py` |
-| Documentation | **PascalCase / descriptive** | `LED.md`, `Servo.md`, `Raspberry_Pi_Pico_Coding_Guide.md` |
+| Documentation | **PascalCase / descriptive** | `LED.md`, `Servo.md`, `Coding_Guide.md` |
 
 ### Classes
 
@@ -407,7 +407,7 @@ The `projects/` folder is organised by component, with progressively complex exa
 | Project | What It Does |
 |:---|:---|
 | [led_on.py](../projects/LED/led_on.py) | Turn on an external LED — the "Hello World" |
-| [onboard_led_blink.py](../projects/LED/onboard_led_blink.py) | Blink the Pico's onboard LED |
+| [onboard_led_blink.py](../projects/LED/onboard_led_blink.py) | Blink the MCU's onboard LED |
 | [external_led_blink.py](../projects/LED/external_led_blink.py) | Blink an external LED on a GPIO pin |
 | [external_led_brightness.py](../projects/LED/external_led_brightness.py) | PWM brightness control |
 | [two_leds_blink_and_fade.py](../projects/LED/two_leds_blink_and_fade.py) | Two LEDs running different animations simultaneously |
@@ -435,7 +435,7 @@ The `projects/` folder is organised by component, with progressively complex exa
 |:---|:---|
 | [schedulerDemo.py](../projects/schedulerDemo.py) | Running multiple task modules as simultaneous processes |
 | [buttonTogglePrograms.py](../projects/buttonTogglePrograms.py) | Button-driven program switching with OLED menu, persistence, watchdog |
-| [Computer Vision projects](../projects/Computer_Vision/) | Gesture control over Wi-Fi (PC → Pico) |
+| [Computer Vision projects](../projects/Computer_Vision/) | Gesture control over Wi-Fi (PC → MCU) |
 
 ### Step 3: Build Your Own
 

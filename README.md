@@ -15,7 +15,7 @@
 
 <br/>
 
-*Baremetal MicroPython libraries with built-in cooperative multitasking for the Raspberry Pi Pico.*
+*Baremetal MicroPython libraries with built-in cooperative multitasking for the Raspberry Pi Pico and Espressif boards.*
 
 </div>
 
@@ -23,7 +23,7 @@
 
 ## Overview
 
-The purpose of this project was to develop a set of libraries that allow easy programming and prototyping of essential sensor and robotics functions, similar to the form of the Arduino IDE. The implementations here are independent of any IDE or existing framework — written in 'baremetal' form using only the `machine` modules provided by MicroPython.
+The purpose of this project is to develop a set of libraries that allow easy programming and prototyping of essential sensor and robotics functions, similar to the form of the Arduino IDE. The implementations here are independent of any IDE or existing framework — written in 'baremetal' form using only the `machine` modules provided by MicroPython.
 
 <details>
 <summary><b>🔧 Supported Components</b></summary>
@@ -82,14 +82,14 @@ For someone seeking to replicate modern PC OS capabilities on a cheap MCU, those
 
 ## Computer Vision
 
-> **Architecture:** Heavy processing (OpenCV, MediaPipe) runs on the PC → commands are sent to the Pico over Wi-Fi TCP.
+> **Architecture:** Heavy processing (OpenCV, MediaPipe) runs on the PC → commands are sent to the MCU over Wi-Fi TCP.
 
 The repository includes gesture control projects split into:
 
 | Side | Location | Role |
 |:---|:---|:---|
 | **Client** (PC) | `projects/Computer_Vision/client_side/` | Webcam capture, hand tracking, sends commands |
-| **Server** (Pico) | `projects/Computer_Vision/server_side/` | Receives commands, drives hardware |
+| **Server** (MCU) | `projects/Computer_Vision/server_side/` | Receives commands, drives hardware |
 
 The desktop-side `compVision.py` library wraps MediaPipe's Hand Landmarker for simplified hand detection. When transferring `stansmicropy` to the MCU, copy it **without** the `desktop` module:
 
@@ -124,7 +124,7 @@ mpremote cp -r src/stansmicropy :
 
 ### Quick Start
 
-1. Read the [Coding Guide](Docs/Raspberry_Pi_Pico_Coding_Guide.md)
+1. Read the [Coding Guide](Docs/Coding_Guide.md)
 2. Browse the [library docs](Docs/) for method references
 3. Start with the [LED examples](projects/LED/) and progress from there
 
@@ -158,14 +158,14 @@ blink/
 │   ├── multi_component_projects/     # Sound sensor, multi-actuator demos
 │   ├── Computer_Vision/
 │   │   ├── client_side/              # PC scripts (sends commands)
-│   │   └── server_side/              # Pico scripts (receives commands)
+│   │   └── server_side/              # MCU scripts (receives commands)
 │   ├── wifi/                         # Wi-Fi connection examples
 │   ├── task/                         # Task modules for the scheduler
 │   ├── schedulerDemo.py
 │   └── buttonTogglePrograms.py
 │
 ├── Docs/                         # ← Guides & library documentation
-│   ├── Raspberry_Pi_Pico_Coding_Guide.md
+│   ├── Coding_Guide.md
 │   ├── LED.md, Servo.md, Button.md, Ultrasonic.md
 │   ├── LCD.md, RGB.md
 │   └── AI_Kit_recommendations.md
